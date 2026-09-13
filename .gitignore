@@ -1,0 +1,25 @@
+# Build
+/target/
+/dist/
+*.o
+*.so
+*.a
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.swp
+
+# Secrets — never commit
+auth.json
+*.pem
+*.key
+.env
+.env.*
+!.env.example
+
+# Local body state
+.rupture/
+sessions/
+*.sock
