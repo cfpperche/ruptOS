@@ -153,8 +153,6 @@ fn run_act(id: String, name: String, args: serde_json::Value, steer: SteerMode) 
     ]
 }
 
-/// Phase A: a tiny nerve interpreter so a raw prompt can launch an organ
-/// without a brain attached yet. Replaced when the model loop lands.
 fn interpret_prompt(id: String, text: String, steer: SteerMode) -> Vec<Outgoing> {
     if steer == SteerMode::Human {
         return vec![Outgoing::NeedWheel {
@@ -164,6 +162,21 @@ fn interpret_prompt(id: String, text: String, steer: SteerMode) -> Vec<Outgoing>
     }
 
     let lower = text.to_lowercase();
+    let words: Vec<&str> = lower.split_whitespace().collect();
+
+    if lower.contains("screenshot") || lower.contains("see the screen") || lower == "frame" {
+        return run_act(id, "sight.frame".into(), serde_json::json!({}), steer);
+    }
+    if words.first() == Some(&"click") && words.len() >= 3 {
+        if let (Ok(x), Ok(y)) = (words[1].parse::<i32>(), words[2].parse::<i32>()) {
+            return run_act(id, "reflex.click".into(), serde_json::json!({"x": x, "y": y}), steer);
+        }
+    }
+    if words.first() == Some(&"type") && text.len() > 5 {
+        let typed = text[text.find(' ').map(|i| i + 1).unwrap_or(0)..].to_string();
+        return run_act(id, "reflex.type".into(), serde_json::json!({"text": typed}), steer);
+    }
+
     let (organ, extra) = if lower.contains("firefox") {
         ("firefox", prompt_url(&text))
     } else if lower.contains("files") || lower.contains("thunar") || lower.contains("folder") {
@@ -185,7 +198,7 @@ fn interpret_prompt(id: String, text: String, steer: SteerMode) -> Vec<Outgoing>
             Outgoing::Error {
                 id,
                 message: format!(
-                    "no brain yet; Phase A understands launch prompts only. got: {text:?}"
+                    "no brain yet; try: open chromium URL | screenshot | click X Y | type TEXT. got: {text:?}"
                 ),
             },
         ];
