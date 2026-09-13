@@ -10,7 +10,21 @@ A Fedora + labwc image (or a documented install on existing Fedora) where:
 - a screen mirror is optional
 - ten personal-computer tasks complete without a human touching the desktop keyboard
 
-Done means those tasks, not a framework diagram.
+Landed:
+
+- [x] prompt socket + JSONL protocol sketch
+- [x] `app.launch` nerve act with an organ allowlist
+- [x] `steer` human | agent
+- [x] labwc session files and Fedora kickstart package set
+
+Not landed:
+
+- [ ] wlr-screencopy eyes
+- [ ] virtual pointer / keyboard hands
+- [ ] download + move file as a verified act
+- [ ] model loop (brain)
+
+Done means the tasks above, not a framework diagram.
 
 ## Phase B — the body knows itself
 

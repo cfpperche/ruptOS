@@ -44,10 +44,11 @@ See [docs/DISTRO.md](docs/DISTRO.md) for the distro decision and the network too
 
 ```
 ruptOS/
-  README.md                 this file
-  docs/                     product and engineering (English)
-  image/                    Fedora image / package set for the body
-  src/                      body runtime (to land in Phase A)
+  README.md
+  docs/
+  crates/ruptured/          seat owner (Rust)
+  image/                    Fedora kickstart + labwc session
+  scripts/prompt.sh         send one prompt to the socket
   LICENSE
 ```
 
@@ -57,12 +58,19 @@ Start here:
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — brain, body, channel
 - [docs/DISTRO.md](docs/DISTRO.md) — why Fedora, compositor, network organs
 - [docs/BODY.md](docs/BODY.md) — perceive → act → verify; nerve vs reflex
+- [docs/RUN.md](docs/RUN.md) — build and talk to ruptured today
 - [docs/ROADMAP.md](docs/ROADMAP.md) — phases A–C
 - [docs/CONVENTIONS.md](docs/CONVENTIONS.md) — language, names, what we refuse
 
 ## Status
 
-Phase A has not landed code yet. This tree is the constitution of the project. Implementation begins with `ruptured` owning a labwc seat and a prompt channel that can open a browser and finish a real desktop task without a human touching the desktop keyboard.
+Phase A is in progress. `ruptured` listens on a Unix socket and can launch allowlisted organs (`app.launch`). There is no vision, no virtual pointer, and no model loop yet. A prompt such as `open chromium https://example.com` is mapped onto that one nerve act.
+
+```bash
+cargo build -p ruptured --release
+./target/release/ruptured
+./scripts/prompt.sh "open chromium https://example.com"
+```
 
 ## What this is not
 
