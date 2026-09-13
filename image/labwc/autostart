@@ -1,0 +1,4 @@
+# labwc autostart for the rupture seat.
+# ruptured must be on PATH (image install or cargo install).
+mkdir -p /run/rupture "$HOME/.rupture"
+exec ruptured

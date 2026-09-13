@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<labwc_config>
+  <!-- Empty human chrome. The agent owns the seat. -->
+  <core>
+    <gap>0</gap>
+  </core>
+  <keyboard>
+    <default />
+  </keyboard>
+</labwc_config>

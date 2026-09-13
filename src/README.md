@@ -1,15 +1,24 @@
-# src/
+# Source
 
-Body runtime lives here.
+The body runtime is the Rust workspace at the repository root.
 
-Phase A target: `ruptured` — a single long-lived process that
+```
+Cargo.toml                 workspace
+crates/ruptured            seat owner daemon
+```
 
-- sits on the labwc seat
-- captures frames
-- injects pointer and keyboard
-- launches organs
-- speaks the prompt socket in [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md)
+```bash
+cargo build -p ruptured --release
+./target/release/ruptured
+```
 
-Language for the daemon is **Rust**, unless a spike proves a wlroots binding is unblockable faster in C. The spike is allowed. Shipping a Node harness as the seat owner is not.
+Socket: `$RUPTURE_SOCK`, else `/run/rupture/rupture.sock` if that directory exists, else `~/.rupture/rupture.sock`.
 
-No code in this directory yet.
+Phase A implements:
+
+- JSONL prompt channel
+- `app.launch` nerve act (allowlisted organs)
+- `steer` human | agent
+- a temporary prompt interpreter that maps "open chromium https://…" onto `app.launch`
+
+Not yet: frames, virtual pointer, accessibility tree, model loop.
